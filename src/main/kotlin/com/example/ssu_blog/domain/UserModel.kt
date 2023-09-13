@@ -1,5 +1,7 @@
 package com.example.ssu_blog.domain
 
+import com.example.ssu_blog.transfer.user.SignUpRequest
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -29,4 +31,14 @@ data class UserModel (
 
     @Column(nullable = false)
     var updatedAt: LocalDateTime = LocalDateTime.now()
+
+    companion object {
+        fun from(request: SignUpRequest, encoder: PasswordEncoder): UserModel {
+            return UserModel(
+                email = request.email,
+                password = encoder.encode(request.password),
+                username = request.username
+            )
+        }
+    }
 }

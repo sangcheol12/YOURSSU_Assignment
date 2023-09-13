@@ -7,7 +7,7 @@ import javax.persistence.*
 @Table(name = "comment")
 data class Comment (
     @Column(nullable = false)
-    var content: String? = null,
+    var content: String,
 
     @ManyToOne
     @JoinColumn(name = "article_id", nullable = false)
