@@ -1,6 +1,7 @@
 package com.example.ssu_blog.repository
 
-import com.example.ssu_blog.domain.UserModel
+import com.example.ssu_blog.user.domain.entity.UserModel
+import com.example.ssu_blog.user.domain.repository.JpaUserRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
