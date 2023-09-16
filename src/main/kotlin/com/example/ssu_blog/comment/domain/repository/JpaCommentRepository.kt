@@ -15,7 +15,7 @@ class JpaCommentRepository(@Autowired private val em: EntityManager): CommentRep
     }
 
     override fun findById(id: Long): Comment? {
-        return em.find(Comment::class.javaObjectType, id)
+        return em.find(Comment::class.java, id)
     }
 
     override fun update(updateComment: Comment): Comment {

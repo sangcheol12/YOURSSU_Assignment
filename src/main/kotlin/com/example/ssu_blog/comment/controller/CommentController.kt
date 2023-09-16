@@ -10,12 +10,17 @@ import com.example.ssu_blog.comment.dto.response.CommentCreateOrUpdateResponse
 import com.example.ssu_blog.comment.service.CommentService
 import com.example.ssu_blog.user.domain.entity.UserModel
 import com.example.ssu_blog.user.service.UserService
+import javax.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 
 @RestController
 @RequestMapping("api/comment")
+@Validated
 class CommentController(
     private val userService: UserService,
     private val articleService: ArticleService,
@@ -23,12 +28,12 @@ class CommentController(
 ) {
     @ResponseBody
     @PostMapping("/{articleId}")
-    fun postComment(@PathVariable("articleId") articleId: Long, @RequestBody request: CommentCreateOrUpdateRequest): ResponseEntity<Any> {
-        val requestURI = "/api/comment/" + articleId.toString()
-        if(request.content == null || request.content.trim().isEmpty()) {
-            val exceptionResponse = ExceptionResponse(HttpStatus.UNPROCESSABLE_ENTITY, "댓글의 본문은 공백일 수 없습니다.", requestURI)
-            return ResponseEntity.status(422).body(exceptionResponse)
-        } // 어노테이션을 사용한 유효성 검사 방식으로 변경할 것
+    fun postComment(
+        @PathVariable("articleId") articleId: Long,
+        @Valid @RequestBody request: CommentCreateOrUpdateRequest
+    ): ResponseEntity<Any> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val accessUser: UserModel
         try {
             accessUser = userService.matchAccount(request.email, request.password)
@@ -50,12 +55,13 @@ class CommentController(
 
     @ResponseBody
     @PutMapping("/{articleId}/{commentId}")
-    fun updateComment(@PathVariable("articleId") articleId: Long, @PathVariable("commentId") commentId: Long, @RequestBody request: CommentCreateOrUpdateRequest): ResponseEntity<Any> {
-        val requestURI = "/api/comment/" + articleId.toString() + "/" + commentId.toString()
-        if(request.content == null || request.content.trim().isEmpty()) {
-            val exceptionResponse = ExceptionResponse(HttpStatus.UNPROCESSABLE_ENTITY, "게시글의 제목과 본문은 공백일 수 없습니다.", requestURI)
-            return ResponseEntity.status(422).body(exceptionResponse)
-        } // 어노테이션을 사용한 유효성 검사 방식으로 변경할 것2
+    fun updateComment(
+        @PathVariable("articleId") articleId: Long,
+        @PathVariable("commentId") commentId: Long,
+        @Valid @RequestBody request: CommentCreateOrUpdateRequest
+    ): ResponseEntity<Any> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val accessUser: UserModel
         try {
             accessUser = userService.matchAccount(request.email, request.password)
@@ -82,8 +88,13 @@ class CommentController(
 
     @ResponseBody
     @DeleteMapping("/{articleId}/{commentId}")
-    fun deleteComment(@PathVariable("articleId") articleId: Long, @PathVariable("commentId") commentId: Long, @RequestBody request: CommentDeleteRequest): ResponseEntity<Any> {
-        val requestURI = "/api/comment/" + articleId.toString() + "/" + commentId.toString()
+    fun deleteComment(
+        @PathVariable("articleId") articleId: Long,
+        @PathVariable("commentId") commentId: Long,
+        @RequestBody request: CommentDeleteRequest
+    ): ResponseEntity<Any> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val accessUser: UserModel
         try {
             accessUser = userService.matchAccount(request.email, request.password)

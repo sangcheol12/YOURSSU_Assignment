@@ -13,14 +13,14 @@ class JpaUserRepository (@Autowired private val em: EntityManager): UserReposito
     }
 
     override fun findById(id: Long): UserModel? {
-        return em.find(UserModel::class.javaObjectType, id)
+        return em.find(UserModel::class.java, id)
     }
 
     override fun findByEmail(email: String): UserModel? {
         return em.createQuery(
             "SELECT u " +
                     "FROM UserModel u " +
-                    "WHERE u.email = :email", UserModel::class.javaObjectType
+                    "WHERE u.email = :email", UserModel::class.java
         )
             .setParameter("email", email)
             .resultList

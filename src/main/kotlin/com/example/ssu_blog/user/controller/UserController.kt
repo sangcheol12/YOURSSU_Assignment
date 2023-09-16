@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 
 @RestController
 @RequestMapping("/api/user")
@@ -20,7 +22,8 @@ class UserController (
     @ResponseBody
     @PostMapping("/signup")
     fun signUp(@RequestBody request: SignUpRequest): ResponseEntity<Any> {
-        val requestURI = "/api/user/signup"
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val user = UserModel.from(request, encoder)
         var signUpResponse: SignUpResponse
         try {
@@ -35,7 +38,8 @@ class UserController (
     @ResponseBody
     @DeleteMapping("/signout")
     fun signOut(@RequestBody request: SignOutRequest): ResponseEntity<Any> {
-        val requestURI = "/api/user/signout"
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val deleteUser: UserModel
         try {
             deleteUser = userService.matchAccount(request.email, request.password)

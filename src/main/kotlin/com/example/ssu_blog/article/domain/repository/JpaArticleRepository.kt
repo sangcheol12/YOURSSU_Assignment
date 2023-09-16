@@ -14,7 +14,7 @@ class JpaArticleRepository(@Autowired private val em: EntityManager): ArticleRep
     }
 
     override fun findById(id: Long): Article? {
-        return em.find(Article::class.javaObjectType, id)
+        return em.find(Article::class.java, id)
     }
 
     override fun update(updateArticle: Article): Article {

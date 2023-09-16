@@ -25,13 +25,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation ("org.springframework.boot:spring-boot-starter-web")
+    implementation ("org.springframework.boot:spring-boot-starter-validation")
     implementation ("org.springframework.boot:spring-boot-starter-security")
     implementation ("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation ("org.jetbrains.kotlin:kotlin-reflect")
     runtimeOnly ("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation ("org.mockito:mockito-core")
-    implementation ("javax.validation:validation-api:2.0.1.Final")
+    implementation ("jakarta.platform:jakarta.jakartaee-api:9.1.0")
     implementation ("org.hibernate.validator:hibernate-validator:6.2.0.Final")
 }
 

@@ -8,25 +8,29 @@ import com.example.ssu_blog.article.dto.request.ArticleCreateOrUpdateRequest
 import com.example.ssu_blog.article.dto.response.ArticleCreateOrUpdateResponse
 import com.example.ssu_blog.Exception.ExceptionResponse
 import com.example.ssu_blog.article.dto.request.ArticleDeleteRequest
+import javax.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
+
 
 @RestController
 @RequestMapping("api/article")
+@Validated
 class ArticleController(
     private val userService: UserService,
     private val articleService: ArticleService
 ) {
     @ResponseBody
     @PostMapping("")
-    fun postArticle(@RequestBody request: ArticleCreateOrUpdateRequest): ResponseEntity<Any> {
-        val requestURI = "/api/article"
-        if(request.title == null || request.title.trim().isEmpty()
-            || request.content == null || request.content.trim().isEmpty()) {
-            val exceptionResponse = ExceptionResponse(HttpStatus.UNPROCESSABLE_ENTITY, "게시글의 제목과 본문은 공백일 수 없습니다.", requestURI)
-            return ResponseEntity.status(422).body(exceptionResponse)
-        } // 어노테이션을 사용한 유효성 검사 방식으로 변경할 것
+    fun postArticle(
+        @Valid @RequestBody request: ArticleCreateOrUpdateRequest
+    ): ResponseEntity<Any> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val accessUser: UserModel
         try {
             accessUser = userService.matchAccount(request.email, request.password)
@@ -41,13 +45,12 @@ class ArticleController(
 
     @ResponseBody
     @PutMapping("/{articleId}")
-    fun updateArticle(@PathVariable("articleId") articleId: Long ,@RequestBody request: ArticleCreateOrUpdateRequest): ResponseEntity<Any> {
-        val requestURI = "/api/article/" + articleId.toString()
-        if(request.title == null || request.title.trim().isEmpty()
-            || request.content == null || request.content.trim().isEmpty()) {
-            val exceptionResponse = ExceptionResponse(HttpStatus.UNPROCESSABLE_ENTITY, "게시글의 제목과 본문은 공백일 수 없습니다.", requestURI)
-            return ResponseEntity.status(422).body(exceptionResponse)
-        } // 어노테이션을 사용한 유효성 검사 방식으로 변경할 것2
+    fun updateArticle(
+        @PathVariable("articleId") articleId: Long,
+        @Valid @RequestBody request: ArticleCreateOrUpdateRequest
+    ): ResponseEntity<Any> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val accessUser: UserModel
         try {
             accessUser = userService.matchAccount(request.email, request.password)
@@ -73,8 +76,12 @@ class ArticleController(
 
     @ResponseBody
     @DeleteMapping("/{articleId}")
-    fun deleteArticle(@PathVariable("articleId") articleId: Long ,@RequestBody request: ArticleDeleteRequest): ResponseEntity<Any> {
-        val requestURI = "/api/article/" + articleId.toString()
+    fun deleteArticle(
+        @PathVariable("articleId") articleId: Long,
+        @RequestBody request: ArticleDeleteRequest
+    ): ResponseEntity<Any> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
         val accessUser: UserModel
         try {
             accessUser = userService.matchAccount(request.email, request.password)
