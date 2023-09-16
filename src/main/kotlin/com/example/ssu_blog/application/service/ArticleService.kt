@@ -31,7 +31,7 @@ class ArticleService (
     fun getAuthArticle(articleId: Long, accessUser: UserEntity): ArticleEntity {
         val article = getArticle(articleId)
         if(article.userEntityId != accessUser)
-            throw IllegalAccessException("게사글을 수정 할 권한이 없습니다.")
+            throw IllegalAccessException("게시글을 수정 할 권한이 없습니다.")
         return article
     }
 }

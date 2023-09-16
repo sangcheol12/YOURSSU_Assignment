@@ -22,7 +22,7 @@ class UserController (
         @Valid @RequestBody request: SignUpRequest
     ): ResponseEntity<Any> {
         val user = UserEntity.from(request, encoder)
-        var signUpResponse = SignUpResponse.from(userService.join(user))
+        val signUpResponse = SignUpResponse.from(userService.join(user))
         return ResponseEntity.status(200).body(signUpResponse)
     }
 
