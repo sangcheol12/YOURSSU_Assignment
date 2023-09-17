@@ -1,0 +1,11 @@
+# mysql database settings
+# .example을 지우고 application.yml로 만들어 사용하시면 됩니다.
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 디비 URL
+    username: 유저명
+    password: 비밀번호
+    jpa:
+      hibernate.ddl-auto: update
+      database: mysql

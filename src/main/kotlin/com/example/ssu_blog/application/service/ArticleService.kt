@@ -19,8 +19,8 @@ class ArticleService (
 
     fun delete(deleteArticleId: Long, accessUser: UserEntity) {
         val article = getAuthArticle(deleteArticleId, accessUser)
-        articleRepository.delete(article)
         commentRepository.deleteAllByArticleEntityId(article)
+        articleRepository.delete(article)
     }
 
     fun getArticle(articleId: Long): ArticleEntity {

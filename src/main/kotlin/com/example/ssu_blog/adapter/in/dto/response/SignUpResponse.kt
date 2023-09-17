@@ -3,8 +3,8 @@ package com.example.ssu_blog.adapter.`in`.dto.response
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 
 class SignUpResponse (
-    val email: String?,
-    val username: String?
+    val email: String,
+    val username: String
 ) {
     companion object {
         fun from(param: UserEntity): SignUpResponse {

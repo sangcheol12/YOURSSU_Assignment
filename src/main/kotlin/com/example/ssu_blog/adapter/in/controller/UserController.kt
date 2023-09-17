@@ -20,7 +20,7 @@ class UserController (
     @PostMapping("/signup")
     fun signUp(
         @Valid @RequestBody request: SignUpRequest
-    ): ResponseEntity<Any> {
+    ): ResponseEntity<SignUpResponse> {
         val user = UserEntity.from(request, encoder)
         val signUpResponse = SignUpResponse.from(userService.join(user))
         return ResponseEntity.status(200).body(signUpResponse)

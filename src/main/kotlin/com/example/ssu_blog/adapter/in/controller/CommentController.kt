@@ -26,7 +26,7 @@ class CommentController(
     fun postComment(
         @PathVariable("articleId") articleId: Long,
         @Valid @RequestBody request: CommentCreateOrUpdateRequest
-    ): ResponseEntity<Any> {
+    ): ResponseEntity<CommentCreateOrUpdateResponse> {
         val accessUser = userService.matchAccount(request.email, request.password)
         val curArticleEntity = articleService.getArticle(articleId)
         val newCommentEntity = CommentEntity(request.content, curArticleEntity, accessUser)
@@ -40,7 +40,7 @@ class CommentController(
         @PathVariable("articleId") articleId: Long,
         @PathVariable("commentId") commentId: Long,
         @Valid @RequestBody request: CommentCreateOrUpdateRequest
-    ): ResponseEntity<Any> {
+    ): ResponseEntity<CommentCreateOrUpdateResponse> {
         val accessUser = userService.matchAccount(request.email, request.password)
         val curArticleEntity = articleService.getArticle(articleId)
         val updateCommentEntity = commentService.getAuthComment(commentId, accessUser, curArticleEntity)

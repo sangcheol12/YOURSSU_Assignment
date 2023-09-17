@@ -23,7 +23,7 @@ class ArticleController(
     @PostMapping("")
     fun postArticle(
         @Valid @RequestBody request: ArticleCreateOrUpdateRequest
-    ): ResponseEntity<Any> {
+    ): ResponseEntity<ArticleCreateOrUpdateResponse> {
         val accessUser = userService.matchAccount(request.email, request.password)
         val newArticleEntity = ArticleEntity(request.content, request.title, accessUser)
         val articleResponse = ArticleCreateOrUpdateResponse.from(articleService.post(newArticleEntity), accessUser.email)
@@ -35,7 +35,7 @@ class ArticleController(
     fun updateArticle(
         @PathVariable("articleId") articleId: Long,
         @Valid @RequestBody request: ArticleCreateOrUpdateRequest
-    ): ResponseEntity<Any> {
+    ): ResponseEntity<ArticleCreateOrUpdateResponse> {
         val accessUser = userService.matchAccount(request.email, request.password)
         var updateArticleEntity = articleService.getAuthArticle(articleId, accessUser)
         updateArticleEntity.updateInfo(request.title, request.content, LocalDateTime.now())

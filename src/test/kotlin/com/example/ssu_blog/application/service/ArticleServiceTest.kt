@@ -1,16 +1,16 @@
 package com.example.ssu_blog.application.service
 
+import com.example.ssu_blog.adapter.`in`.controller.UserController
 import com.example.ssu_blog.adapter.out.persistence.entity.ArticleEntity
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 import com.example.ssu_blog.adapter.out.persistence.repository.ArticleRepository
 import com.example.ssu_blog.adapter.out.persistence.repository.CommentRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.ArgumentMatchers
-import org.mockito.ArgumentMatchers.any
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -39,6 +39,7 @@ class ArticleServiceTest {
     }
 
     @Test
+    @DisplayName("게시글 작성 서비스 테스트")
     fun postArticleTest() {
         val newArticle = ArticleEntity("Test Content", "Test Title", UserEntity("test@urssu.com", "password", "Test User"))
         Mockito.`when`(articleRepository.save(newArticle)).thenReturn(newArticle)
@@ -49,6 +50,7 @@ class ArticleServiceTest {
     }
 
     @Test
+    @DisplayName("게시글 삭제 서비스 테스트")
     fun deleteArticleTest() {
         val articleId = 1L
         val accessUser = UserEntity("test@urssu.com", "password", "Test User")
@@ -62,6 +64,7 @@ class ArticleServiceTest {
     }
 
     @Test
+    @DisplayName("삭제 권한없는 게시글 삭제 서비스 테스트")
     fun deleteArticleAccessDeniedTest() {
         val articleId = 1L
         val accessUser = UserEntity("test@urssu.com", "password", "Test User")
