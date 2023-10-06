@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CommentRepository: JpaRepository<CommentEntity, Long> {
-    fun findAllByUserEntityId(userEntity: UserEntity): List<CommentEntity>
     fun deleteAllByArticleEntityId(articleEntity: ArticleEntity)
     fun deleteAllByUserEntityId(userEntity: UserEntity)
 
