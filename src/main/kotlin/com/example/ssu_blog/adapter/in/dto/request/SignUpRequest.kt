@@ -8,5 +8,7 @@ data class SignUpRequest (
     @field:NotBlank(message = "비밀번호는 비어 있을 수 없습니다.")
     val password: String,
     @field:NotBlank(message = "유저명은 비어 있을 수 없습니다.")
-    val username: String
+    val username: String,
+    @field:NotBlank(message = "Role은 비어 있을 수 없습니다.")
+    val role: String
 )

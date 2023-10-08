@@ -1,11 +1,15 @@
 package com.example.ssu_blog.adapter.`in`.controller
 
+import com.example.ssu_blog.adapter.`in`.dto.request.SignInRequest
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 import com.example.ssu_blog.application.service.UserService
-import com.example.ssu_blog.adapter.`in`.dto.request.SignOutRequest
 import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
+import com.example.ssu_blog.adapter.`in`.dto.response.SignInResponse
 import com.example.ssu_blog.adapter.`in`.dto.response.SignUpResponse
+import com.example.ssu_blog.auth.JwtTokenProvider
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -16,7 +20,8 @@ import javax.validation.Valid
 @Validated
 class UserController (
     private val userService: UserService,
-    private val encoder: PasswordEncoder
+    private val encoder: PasswordEncoder,
+    private val jwtTokenProvider: JwtTokenProvider
 ) {
     @ResponseBody
     @PostMapping("/signup")
@@ -29,11 +34,22 @@ class UserController (
     }
 
     @ResponseBody
+    @PostMapping("/signin")
+    @ResponseStatus(value = HttpStatus.OK)
+    fun signIn(
+        @Valid @RequestBody request: SignInRequest
+    ): SignInResponse {
+        val user = userService.matchAccount(request.email, request.password)
+        val accessToken = jwtTokenProvider.createAccessToken("${user.email}:${user.role}")
+        return SignInResponse.from(user, accessToken)
+    }
+
+    @ResponseBody
     @DeleteMapping("/signout")
     @ResponseStatus(value = HttpStatus.OK)
     fun signOut(
-        @Valid @RequestBody request: SignOutRequest
+        @AuthenticationPrincipal userDetails: UserDetails
     ) {
-        userService.leave(userService.matchAccount(request.email, request.password))
+        userService.leave(userService.findOneByEmail(userDetails.username))
     }
 }
