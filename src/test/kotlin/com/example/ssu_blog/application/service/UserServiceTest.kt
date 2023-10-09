@@ -6,6 +6,7 @@ import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 import com.example.ssu_blog.adapter.out.persistence.repository.ArticleRepository
 import com.example.ssu_blog.adapter.out.persistence.repository.CommentRepository
 import com.example.ssu_blog.adapter.out.persistence.repository.UserRepository
+import com.example.ssu_blog.auth.JwtTokenProvider
 import org.hibernate.validator.internal.util.Contracts.assertNotNull
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -38,14 +39,17 @@ class UserServiceTest {
     @Mock
     private lateinit var encoder: PasswordEncoder
 
+    @Mock
+    private lateinit var jwtTokenProvider: JwtTokenProvider
+
     @InjectMocks
     private lateinit var userService: UserService
 
     @BeforeEach
     fun setUp() {
-        userService = UserService(userRepository ,articleRepository, commentRepository, encoder)
+        userService = UserService(userRepository ,articleRepository, commentRepository, jwtTokenProvider, encoder)
 
-        val user = UserEntity("leave@urssu.com", "password", "Tester")
+        val user = UserEntity("leave@urssu.com", "password", "Tester", "USER")
         userRepository.save(user)
 
         val article1 = ArticleEntity("Title 1", "Content 1", user)
@@ -62,7 +66,7 @@ class UserServiceTest {
     @Test
     @DisplayName("회원 가입 서비스 테스트")
     fun joinTest() {
-        val user = UserEntity("test@urssu.com", "password", "Test User")
+        val user = UserEntity("test@urssu.com", "password", "Test User", "USER")
 
         Mockito.`when`(userRepository.findByEmail(user.email)).thenReturn(null)
         Mockito.`when`(userRepository.save(user)).thenReturn(user)
@@ -79,7 +83,7 @@ class UserServiceTest {
     @Test
     @DisplayName("회원 중복 서비스 테스트")
     fun joinDuplicateUserTest() {
-        val user = UserEntity("test@urssu.com", "password", "Test User")
+        val user = UserEntity("test@urssu.com", "password", "Test User", "USER")
 
         Mockito.`when`(userRepository.findByEmail(user.email)).thenReturn(user)
 

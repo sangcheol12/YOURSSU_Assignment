@@ -1,6 +1,5 @@
 package com.example.ssu_blog.application.service
 
-import com.example.ssu_blog.adapter.`in`.controller.UserController
 import com.example.ssu_blog.adapter.out.persistence.entity.ArticleEntity
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 import com.example.ssu_blog.adapter.out.persistence.repository.ArticleRepository

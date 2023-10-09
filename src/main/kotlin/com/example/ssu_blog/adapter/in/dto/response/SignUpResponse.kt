@@ -2,15 +2,17 @@ package com.example.ssu_blog.adapter.`in`.dto.response
 
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 
-class SignUpResponse (
+data class SignUpResponse (
     val email: String,
-    val username: String
+    val username: String,
+    val role: String
 ) {
     companion object {
         fun from(param: UserEntity): SignUpResponse {
             return SignUpResponse(
                 email = param.email,
-                username = param.username
+                username = param.nickname,
+                role = param.role.value()
             )
         }
     }

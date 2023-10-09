@@ -1,7 +1,5 @@
 package com.example.ssu_blog.adapter.`in`.controller
 
-import com.example.ssu_blog.adapter.`in`.dto.request.SignOutRequest
-import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 import com.example.ssu_blog.adapter.out.persistence.repository.UserRepository
 import com.example.ssu_blog.application.service.UserService
@@ -11,13 +9,10 @@ import jakarta.ws.rs.core.MediaType
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
-import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.crypto.password.PasswordEncoder
