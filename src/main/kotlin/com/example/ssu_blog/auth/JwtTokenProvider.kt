@@ -95,12 +95,12 @@ class JwtTokenProvider(
 
     // 어세스 토큰 헤더 설정
     fun setHeaderAccessToken(response: HttpServletResponse, accessToken: String) {
-        response.setHeader("authorization", "bearer $accessToken")
+        response.setHeader("authorization", "Bearer $accessToken")
     }
 
     // 리프레시 토큰 헤더 설정
     fun setHeaderRefreshToken(response: HttpServletResponse, refreshToken: String) {
-        response.setHeader("refreshToken", "bearer $refreshToken")
+        response.setHeader("refreshToken", "Bearer $refreshToken")
     }
 
     fun compareRefreshToken(token: String): Boolean {
