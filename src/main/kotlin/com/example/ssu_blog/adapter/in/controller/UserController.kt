@@ -40,7 +40,7 @@ class UserController (
         @Valid @RequestBody request: SignInRequest
     ): SignInResponse {
         val user = userService.matchAccount(request.email, request.password)
-        val accessToken = jwtTokenProvider.createAccessToken("${user.email}:${user.role}")
+        val accessToken = jwtTokenProvider.createAccessToken(user.email,user.role.value())
         return SignInResponse.from(user, accessToken)
     }
 

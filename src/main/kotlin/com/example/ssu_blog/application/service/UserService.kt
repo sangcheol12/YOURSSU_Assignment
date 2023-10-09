@@ -34,12 +34,11 @@ class UserService(
         return curUser
     }
 
-
     fun matchAccount(email: String, password: String): UserEntity {
         val accessUser = userRepository.findByEmail(email)
             ?.takeIf { encoder.matches(password, it.password) }	// 암호화된 비밀번호와 비교하도록 수정
             ?: throw IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.")
-        val refreshToken = jwtTokenProvider.createRefreshToken("${accessUser.email}:${accessUser.role}")
+        val refreshToken = jwtTokenProvider.createRefreshToken("accessUser.email","accessUser.role")
         accessUser.updatedAt = LocalDateTime.now()
         accessUser.refreshToken = refreshToken
         return accessUser

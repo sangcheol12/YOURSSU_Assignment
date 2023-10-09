@@ -1,6 +1,5 @@
 package com.example.ssu_blog.adapter.`in`.dto.request
 
-import javax.validation.constraints.Email
 import javax.validation.constraints.NotBlank
 
 data class CommentCreateOrUpdateRequest (
