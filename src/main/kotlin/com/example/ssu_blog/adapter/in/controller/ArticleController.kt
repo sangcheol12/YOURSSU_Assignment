@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("api/article")
-@PreAuthorize("hasAuthority(('USER'))")
 @Validated
 class ArticleController(
     private val userService: UserService,

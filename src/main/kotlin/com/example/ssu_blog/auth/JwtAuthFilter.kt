@@ -1,25 +1,26 @@
 package com.example.ssu_blog.auth
 
-import org.springframework.core.annotation.Order
+import com.example.ssu_blog.Exception.BadRequestCode
+import com.example.ssu_blog.Exception.CustomBadRequestException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetails
-import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Component
+//@Component
 class JwtAuthFilter(
     private val jwtTokenProvider: JwtTokenProvider,
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val accessToken = jwtTokenProvider.getAccessToken(request)
-        val refreshToken = jwtTokenProvider.getRefreshToken(request)
+        //val refreshToken = jwtTokenProvider.getRefreshToken(request)
         if(accessToken != null) {
             if(jwtTokenProvider.validateAccessToken(accessToken)) setAuthentication(accessToken, request)
-            else if(refreshToken != null) {
+            else throw CustomBadRequestException(BadRequestCode.INVALID_TOKEN)
+            /*else if(refreshToken != null) {
                 if(jwtTokenProvider.validateRefreshToken(refreshToken) && jwtTokenProvider.compareRefreshToken(refreshToken)) {
                     val email = jwtTokenProvider.getUserEmailByRefresh(refreshToken)
                     val role = jwtTokenProvider.getRoleByRefresh(refreshToken)
@@ -27,7 +28,9 @@ class JwtAuthFilter(
                     jwtTokenProvider.setHeaderAccessToken(response, newAccessToken)
                     setAuthentication(newAccessToken, request)
                 }
-            }
+            }*/
+        } else {
+            throw CustomBadRequestException(BadRequestCode.EMPTY_TOKEN)
         }
         filterChain.doFilter(request, response)
     }

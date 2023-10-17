@@ -52,4 +52,14 @@ class GlobalExceptionHandler {
     fun handleIllegalStateException(ex: IllegalStateException): ResponseEntity<ExceptionResponse> {
         return handleException(ex, HttpStatus.CONFLICT)
     }
+
+    @ExceptionHandler(CustomBadRequestException::class)
+    fun handleCustomBadRequsetException(ex: CustomBadRequestException): ResponseEntity<ExceptionResponse> {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
+
+        val errorMessage = ex.badRequestCode.message
+        val exceptionResponse = ExceptionResponse(ex.badRequestCode.status, errorMessage!!, requestURI)
+        return ResponseEntity.status(exceptionResponse.status).body(exceptionResponse)
+    }
 }

@@ -17,7 +17,6 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("api/comment")
-@PreAuthorize("hasAuthority(('USER'))")
 @Validated
 class CommentController(
     private val userService: UserService,

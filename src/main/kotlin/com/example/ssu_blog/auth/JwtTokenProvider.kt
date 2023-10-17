@@ -47,11 +47,13 @@ class JwtTokenProvider(
             .compact()!!
     }    // JWT 토큰 생성
 
-    fun getAccessToken(request: HttpServletRequest) = request.getHeader(HttpHeaders.AUTHORIZATION)
-        .takeIf { it?.startsWith("Bearer ", true) ?: false }?.substring(7)
+    fun getAccessToken(request: HttpServletRequest) = request.getHeader("Authorization")
+        ?.takeIf { it.startsWith("Bearer ", ignoreCase = true) }
+        ?.substring(7)?.takeIf { it.isNotEmpty() }
 
     fun getRefreshToken(request: HttpServletRequest) = request.getHeader("RefreshToken")
-        .takeIf { it?.startsWith("Bearer ", true) ?: false }?.substring(7)
+        ?.takeIf { it.startsWith("Bearer ", ignoreCase = true) }
+        ?.substring(7)?.takeIf { it.isNotEmpty() }
 
     // JWT 토큰을 검증하여 사용자 정보 추출
     fun getAuthentication(token: String) = User(getUserEmail(token), "", getRole(token))
