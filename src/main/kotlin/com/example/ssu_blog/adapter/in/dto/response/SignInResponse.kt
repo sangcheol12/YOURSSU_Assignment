@@ -13,7 +13,7 @@ data class SignInResponse (
         fun from(param: UserEntity, curAccessToken: String): SignInResponse {
             return SignInResponse(
                 email = param.email,
-                username = param.nickname,
+                username = param.username,
                 role = param.role.value(),
                 accessToken = "Bearer " + curAccessToken,
                 refreshToken = "Bearer " + param.refreshToken

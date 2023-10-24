@@ -11,7 +11,7 @@ data class SignUpResponse (
         fun from(param: UserEntity): SignUpResponse {
             return SignUpResponse(
                 email = param.email,
-                username = param.nickname,
+                username = param.username,
                 role = param.role.value()
             )
         }
