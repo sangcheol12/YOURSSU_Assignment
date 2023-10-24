@@ -6,6 +6,8 @@ import com.example.ssu_blog.application.service.UserService
 import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
 import com.example.ssu_blog.adapter.`in`.dto.response.SignInResponse
 import com.example.ssu_blog.adapter.`in`.dto.response.SignUpResponse
+import com.example.ssu_blog.annotation.Auth
+import com.example.ssu_blog.auth.AuthInfo
 import com.example.ssu_blog.auth.JwtTokenProvider
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -48,8 +50,8 @@ class UserController (
     @DeleteMapping("/signout")
     @ResponseStatus(value = HttpStatus.OK)
     fun signOut(
-        @AuthenticationPrincipal userDetails: UserDetails
+        @Auth authInfo: AuthInfo
     ) {
-        userService.leave(userService.findOneByEmail(userDetails.username))
+        userService.leave(userService.findOneByEmail("sangchepa1@urssu.com"))
     }
 }

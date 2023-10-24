@@ -5,6 +5,8 @@ import com.example.ssu_blog.application.service.ArticleService
 import com.example.ssu_blog.application.service.UserService
 import com.example.ssu_blog.adapter.`in`.dto.request.ArticleCreateOrUpdateRequest
 import com.example.ssu_blog.adapter.`in`.dto.response.ArticleCreateOrUpdateResponse
+import com.example.ssu_blog.annotation.Auth
+import com.example.ssu_blog.auth.AuthInfo
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -25,10 +27,10 @@ class ArticleController(
     @PostMapping("")
     @ResponseStatus(value = HttpStatus.OK)
     fun postArticle(
-        @AuthenticationPrincipal userDetails: UserDetails,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody request: ArticleCreateOrUpdateRequest
     ): ArticleCreateOrUpdateResponse {
-        val accessUser = userService.findOneByEmail(userDetails.username)
+        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
         val newArticleEntity = ArticleEntity(request.content, request.title, accessUser)
         return ArticleCreateOrUpdateResponse.from(articleService.post(newArticleEntity), accessUser.email)
     }
@@ -37,11 +39,11 @@ class ArticleController(
     @PutMapping("/{articleId}")
     @ResponseStatus(value = HttpStatus.OK)
     fun updateArticle(
-        @AuthenticationPrincipal userDetails: UserDetails,
         @PathVariable("articleId") articleId: Long,
+        @Auth authInfo: AuthInfo,
         @Valid @RequestBody request: ArticleCreateOrUpdateRequest
     ): ArticleCreateOrUpdateResponse {
-        val accessUser = userService.findOneByEmail(userDetails.username)
+        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
         var updateArticleEntity = articleService.getAuthArticle(articleId, accessUser)
         updateArticleEntity.updateInfo(request.title, request.content, LocalDateTime.now())
         return ArticleCreateOrUpdateResponse.from(articleService.post(updateArticleEntity), accessUser.email)
@@ -51,10 +53,10 @@ class ArticleController(
     @DeleteMapping("/{articleId}")
     @ResponseStatus(value = HttpStatus.OK)
     fun deleteArticle(
-        @AuthenticationPrincipal userDetails: UserDetails,
-        @PathVariable("articleId") articleId: Long
+        @PathVariable("articleId") articleId: Long,
+        @Auth authInfo: AuthInfo
     ) {
-        val accessUser = userService.findOneByEmail(userDetails.username)
+        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
         articleService.delete(articleId, accessUser)
     }
 }

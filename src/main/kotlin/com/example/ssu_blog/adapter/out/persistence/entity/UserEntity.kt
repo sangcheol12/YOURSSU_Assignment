@@ -14,9 +14,9 @@ import javax.persistence.*
 class UserEntity(
     email: String,
     pwd: String,
-    nickname: String,
+    username: String,
     role: UserRoleEnum
-): UserDetails {
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val userId: Long? = null
@@ -24,11 +24,11 @@ class UserEntity(
     @Column(nullable = false)
     var email: String = email
 
-    @Column(nullable = false, name = "password")
-    val pwd: String = pwd
+    @Column(nullable = false)
+    val password: String = pwd
 
-    @Column(nullable = false, name = "username")
-    val nickname: String = nickname
+    @Column(nullable = false)
+    val username: String = username
 
     @Column(nullable = true)
     var refreshToken: String? = null
@@ -53,44 +53,9 @@ class UserEntity(
             return UserEntity(
                 email = request.email,
                 pwd = encoder.encode(request.password),
-                nickname = request.username,
+                username = request.username,
                 role = userRole
             )
         }
-    }
-
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        val authorities = mutableListOf<GrantedAuthority>()
-
-        // 사용자의 권한에 따라 권한을 추가
-        when (this.role.value()) {
-            "ADMIN" -> authorities.add(SimpleGrantedAuthority("ADMIN"))
-            else -> authorities.add(SimpleGrantedAuthority("USER"))
-        }
-        return authorities
-    }
-
-    override fun getPassword(): String {
-        return this.pwd
-    }
-
-    override fun getUsername(): String {
-        return this.email
-    }
-
-    override fun isAccountNonExpired(): Boolean {
-        return false
-    }
-
-    override fun isAccountNonLocked(): Boolean {
-        return false
-    }
-
-    override fun isCredentialsNonExpired(): Boolean {
-        return false
-    }
-
-    override fun isEnabled(): Boolean {
-        return false
     }
 }
