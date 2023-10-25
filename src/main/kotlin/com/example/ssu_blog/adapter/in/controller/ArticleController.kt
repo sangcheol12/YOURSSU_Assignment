@@ -30,7 +30,7 @@ class ArticleController(
         @Auth authInfo: AuthInfo,
         @Valid @RequestBody request: ArticleCreateOrUpdateRequest
     ): ArticleCreateOrUpdateResponse {
-        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
+        val accessUser = userService.findOneByEmail(authInfo.email)
         val newArticleEntity = ArticleEntity(request.content, request.title, accessUser)
         return ArticleCreateOrUpdateResponse.from(articleService.post(newArticleEntity), accessUser.email)
     }
@@ -43,7 +43,7 @@ class ArticleController(
         @Auth authInfo: AuthInfo,
         @Valid @RequestBody request: ArticleCreateOrUpdateRequest
     ): ArticleCreateOrUpdateResponse {
-        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
+        val accessUser = userService.findOneByEmail(authInfo.email)
         var updateArticleEntity = articleService.getAuthArticle(articleId, accessUser)
         updateArticleEntity.updateInfo(request.title, request.content, LocalDateTime.now())
         return ArticleCreateOrUpdateResponse.from(articleService.post(updateArticleEntity), accessUser.email)
@@ -56,7 +56,7 @@ class ArticleController(
         @PathVariable("articleId") articleId: Long,
         @Auth authInfo: AuthInfo
     ) {
-        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
+        val accessUser = userService.findOneByEmail(authInfo.email)
         articleService.delete(articleId, accessUser)
     }
 }

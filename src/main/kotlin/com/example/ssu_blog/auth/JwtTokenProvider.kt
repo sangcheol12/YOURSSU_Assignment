@@ -47,7 +47,7 @@ class JwtTokenProvider(
             .compact()!!
     }    // JWT 토큰 생성
 
-    fun getAccessToken(request: HttpServletRequest) = request.getHeader("Authorization")
+    fun getAccessToken(request: HttpServletRequest) = request.getHeader(HttpHeaders.AUTHORIZATION)
         ?.takeIf { it.startsWith("Bearer ", ignoreCase = true) }
         ?.substring(7)?.takeIf { it.isNotEmpty() }
 

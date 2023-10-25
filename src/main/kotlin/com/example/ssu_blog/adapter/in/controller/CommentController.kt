@@ -33,7 +33,7 @@ class CommentController(
         @Auth authInfo: AuthInfo,
         @Valid @RequestBody request: CommentCreateOrUpdateRequest
     ): CommentCreateOrUpdateResponse {
-        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
+        val accessUser = userService.findOneByEmail(authInfo.email)
         val curArticleEntity = articleService.getArticle(articleId)
         val newCommentEntity = CommentEntity(request.content, curArticleEntity, accessUser)
         return CommentCreateOrUpdateResponse.from(commentService.post(newCommentEntity), accessUser.email)
@@ -48,7 +48,7 @@ class CommentController(
         @Auth authInfo: AuthInfo,
         @Valid @RequestBody request: CommentCreateOrUpdateRequest
     ): CommentCreateOrUpdateResponse {
-        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
+        val accessUser = userService.findOneByEmail(authInfo.email)
         val curArticleEntity = articleService.getArticle(articleId)
         val updateCommentEntity = commentService.getAuthComment(commentId, accessUser, curArticleEntity)
         updateCommentEntity.updateInfo(request.content, LocalDateTime.now())
@@ -63,7 +63,7 @@ class CommentController(
         @PathVariable("commentId") commentId: Long,
         @Auth authInfo: AuthInfo
     ) {
-        val accessUser = userService.findOneByEmail("sangchepa1@urssu.com")
+        val accessUser = userService.findOneByEmail(authInfo.email)
         val curArticleEntity = articleService.getArticle(articleId)
         commentService.delete(commentId, accessUser, curArticleEntity)
     }

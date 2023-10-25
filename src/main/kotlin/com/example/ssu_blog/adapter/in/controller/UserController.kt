@@ -52,6 +52,6 @@ class UserController (
     fun signOut(
         @Auth authInfo: AuthInfo
     ) {
-        userService.leave(userService.findOneByEmail("sangchepa1@urssu.com"))
+        userService.leave(userService.findOneByEmail(authInfo.email))
     }
 }
