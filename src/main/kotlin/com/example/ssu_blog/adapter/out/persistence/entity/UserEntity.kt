@@ -2,9 +2,6 @@ package com.example.ssu_blog.adapter.out.persistence.entity
 
 import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
 import com.example.ssu_blog.utils.UserRoleEnum
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
 import javax.persistence.*

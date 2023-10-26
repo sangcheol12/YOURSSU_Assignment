@@ -9,9 +9,6 @@ import com.example.ssu_blog.application.service.CommentService
 import com.example.ssu_blog.application.service.UserService
 import com.example.ssu_blog.auth.AuthInfo
 import org.springframework.http.HttpStatus
-import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.UserDetails
 import javax.validation.Valid
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*

@@ -1,5 +1,6 @@
 package com.example.ssu_blog.application.service
 
+import com.example.ssu_blog.adapter.`in`.dto.response.TokenRefreshResponse
 import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
 import com.example.ssu_blog.adapter.out.persistence.repository.*
 import com.example.ssu_blog.auth.JwtTokenProvider
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
+import javax.servlet.http.HttpServletRequest
 import javax.transaction.Transactional
 
 @Service
@@ -42,6 +44,19 @@ class UserService(
         accessUser.updatedAt = LocalDateTime.now()
         accessUser.refreshToken = refreshToken
         return accessUser
+    }
+
+    fun refreshToken(request: HttpServletRequest): TokenRefreshResponse {
+        val refreshToken = jwtTokenProvider.getRefreshToken(request)
+        if(refreshToken == null || !jwtTokenProvider.validateRefreshToken(refreshToken)) throw IllegalAccessException("리프레쉬 토큰이 존재하지 않거나 유효하지 않습니다.")
+        val userEmail = jwtTokenProvider.getUserEmailByRefresh(refreshToken)
+        val curUser = findOneByEmail(userEmail)
+        if(curUser.refreshToken != refreshToken) throw IllegalAccessException("리프레쉬 토큰이 일치하지 않습니다.") // 데이터베이스에 저장 된 리프레쉬 토큰과 일치 여부 검사
+        val userRole = jwtTokenProvider.getRoleByRefresh(refreshToken)
+        val result = TokenRefreshResponse(jwtTokenProvider.createAccessToken(userEmail, userRole),jwtTokenProvider.createRefreshToken(userEmail, userRole))
+        curUser.refreshToken = result.refreshToken; curUser.updatedAt = LocalDateTime.now()
+        userRepository.save(curUser)
+        return result
     }
 
     fun leave(leaveUser: UserEntity) {

@@ -35,8 +35,6 @@ class CustomHandlerMethodArgumentResolver: HandlerMethodArgumentResolver{
             val curUser = AuthInfo(userEmail)
             return curUser
         }
-
-        // 사용자 정보를 찾을 수 없는 경우 null 또는 기본값 반환
         return null
     }
 }

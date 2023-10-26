@@ -16,21 +16,12 @@ class JwtAuthFilter(
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
         val accessToken = jwtTokenProvider.getAccessToken(request)
-        //val refreshToken = jwtTokenProvider.getRefreshToken(request)
         if(accessToken != null) {
             if(jwtTokenProvider.validateAccessToken(accessToken)) setAuthentication(accessToken, request)
-            else throw CustomBadRequestException(BadRequestCode.INVALID_TOKEN)
-            /*else if(refreshToken != null) {
-                if(jwtTokenProvider.validateRefreshToken(refreshToken) && jwtTokenProvider.compareRefreshToken(refreshToken)) {
-                    val email = jwtTokenProvider.getUserEmailByRefresh(refreshToken)
-                    val role = jwtTokenProvider.getRoleByRefresh(refreshToken)
-                    val newAccessToken = jwtTokenProvider.createAccessToken(email, role)
-                    jwtTokenProvider.setHeaderAccessToken(response, newAccessToken)
-                    setAuthentication(newAccessToken, request)
-                }
-            }*/
+            else throw CustomBadRequestException(BadRequestCode.INVALID_TOKEN) // 유효하지 않는 토큰
+
         } else {
-            throw CustomBadRequestException(BadRequestCode.EMPTY_TOKEN)
+            throw CustomBadRequestException(BadRequestCode.EMPTY_TOKEN) // 토큰이 존재하지 않음
         }
         filterChain.doFilter(request, response)
     }

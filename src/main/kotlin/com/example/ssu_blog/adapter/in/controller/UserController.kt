@@ -6,15 +6,15 @@ import com.example.ssu_blog.application.service.UserService
 import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
 import com.example.ssu_blog.adapter.`in`.dto.response.SignInResponse
 import com.example.ssu_blog.adapter.`in`.dto.response.SignUpResponse
+import com.example.ssu_blog.adapter.`in`.dto.response.TokenRefreshResponse
 import com.example.ssu_blog.annotation.Auth
 import com.example.ssu_blog.auth.AuthInfo
 import com.example.ssu_blog.auth.JwtTokenProvider
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
 @RestController
@@ -44,6 +44,15 @@ class UserController (
         val user = userService.matchAccount(request.email, request.password)
         val accessToken = jwtTokenProvider.createAccessToken(user.email,user.role.value())
         return SignInResponse.from(user, accessToken)
+    }
+
+    @ResponseBody()
+    @PostMapping("/refresh")
+    @ResponseStatus(value = HttpStatus.OK)
+    fun refreshToken(
+        request: HttpServletRequest
+    ): TokenRefreshResponse {
+        return userService.refreshToken(request)
     }
 
     @ResponseBody
