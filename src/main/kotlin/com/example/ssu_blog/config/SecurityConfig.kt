@@ -5,7 +5,6 @@ import com.example.ssu_blog.auth.JwtAuthFilter
 import com.example.ssu_blog.auth.JwtTokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
@@ -20,7 +19,7 @@ class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
     private val exceptionHandlerFilter: ExceptionHandlerFilter
 ) {
-    private val allowedUrls = arrayOf("/", "/swagger-ui/**", "/v3/**", "/api/user/signup", "/api/user/signin")
+    private val allowedUrls = arrayOf("/", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html","/swagger-ui/**", "/v3/**", "/api/user/signup", "/api/user/signin", "/api/user/refresh")
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder()

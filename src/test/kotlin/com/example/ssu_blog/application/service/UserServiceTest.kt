@@ -7,23 +7,19 @@ import com.example.ssu_blog.adapter.out.persistence.repository.ArticleRepository
 import com.example.ssu_blog.adapter.out.persistence.repository.CommentRepository
 import com.example.ssu_blog.adapter.out.persistence.repository.UserRepository
 import com.example.ssu_blog.auth.JwtTokenProvider
-import org.hibernate.validator.internal.util.Contracts.assertNotNull
+import com.example.ssu_blog.utils.UserRoleEnum
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.crypto.password.PasswordEncoder
-import javax.transaction.Transactional
 
-@SpringBootTest
-@Transactional
 @ExtendWith(MockitoExtension::class)
 class UserServiceTest {
 
@@ -42,14 +38,14 @@ class UserServiceTest {
     @Mock
     private lateinit var jwtTokenProvider: JwtTokenProvider
 
-    @InjectMocks
     private lateinit var userService: UserService
 
     @BeforeEach
     fun setUp() {
+        MockitoAnnotations.openMocks(this)
         userService = UserService(userRepository ,articleRepository, commentRepository, jwtTokenProvider, encoder)
 
-        val user = UserEntity("leave@urssu.com", "password", "Tester", "USER")
+        val user = UserEntity("leave@urssu.com", "password", "Tester",  UserRoleEnum.USER)
         userRepository.save(user)
 
         val article1 = ArticleEntity("Title 1", "Content 1", user)
@@ -64,16 +60,17 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 가입 서비스 테스트")
+    @DisplayName("Given: 회원 가입을 시도하고, When: 유효한 사용자 정보를 제출하면, Then: 회원 가입이 성공해야 함")
     fun joinTest() {
-        val user = UserEntity("test@urssu.com", "password", "Test User", "USER")
+        // Given
+        val user = UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER)
 
+        // When
         Mockito.`when`(userRepository.findByEmail(user.email)).thenReturn(null)
         Mockito.`when`(userRepository.save(user)).thenReturn(user)
-
         val result = userService.join(user)
 
-        assertNotNull(result)
+        // Then
         assertEquals(user, result)
 
         Mockito.verify(userRepository, Mockito.times(1)).findByEmail(user.email)
@@ -81,12 +78,15 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 중복 서비스 테스트")
+    @DisplayName("Given: 이미 등록된 이메일로 가입을 시도하고, When: 동일 이메일로 가입을 시도하면, Then: IllegalStateException 예외가 발생해야 함")
     fun joinDuplicateUserTest() {
-        val user = UserEntity("test@urssu.com", "password", "Test User", "USER")
+        // Given
+        val user = UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER)
 
+        // When
         Mockito.`when`(userRepository.findByEmail(user.email)).thenReturn(user)
 
+        // Then
         val exception = assertThrows<IllegalStateException> { userService.join(user) }
 
         Mockito.verify(userRepository, Mockito.times(1)).findByEmail(user.email)
@@ -95,13 +95,16 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("회원 탈퇴 서비스 테스트")
+    @DisplayName("Given: 탈퇴할 회원, When: 회원 탈퇴를 요청하면, Then: 사용자 및 관련 게시물이 삭제되어야 함")
     fun leaveTest() {
+        // Given
         val user = userRepository.findByEmail("leave@urssu.com")
 
+        // When
         user?.let { safeUser ->
             Mockito.`when`(userRepository.findByEmail(safeUser.email)).thenReturn(user)
 
+            // Then
             userService.leave(safeUser)
             Mockito.verify(userRepository, Mockito.times(1)).delete(safeUser)
             Mockito.verify(articleRepository, Mockito.times(1)).deleteAllByUserEntityId(safeUser)

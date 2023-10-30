@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
 import javax.servlet.FilterChain
@@ -23,9 +25,12 @@ class ExceptionHandlerFilter : OncePerRequestFilter() {
     }
 
     fun setExceptionResponse(status: HttpStatus, response: HttpServletResponse, ex: CustomBadRequestException) {
+        val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
+        val requestURI = requestAttributes.request.requestURI
+
         response.status = status.value()
         response.contentType = "application/json;charset=UTF-8"
-        val exceptionResponse = ExceptionResponse(ex.badRequestCode.status, ex.badRequestCode.message, "sdadasf")
+        val exceptionResponse = ExceptionResponse(ex.badRequestCode.status, ex.badRequestCode.message, requestURI)
         try {
             val objectMapper = ObjectMapper()
             objectMapper.registerModule(JavaTimeModule())
