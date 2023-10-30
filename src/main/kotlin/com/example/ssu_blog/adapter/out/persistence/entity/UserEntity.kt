@@ -10,7 +10,7 @@ import javax.persistence.*
 @Table(name = "user")
 class UserEntity(
     email: String,
-    pwd: String,
+    password: String,
     username: String,
     role: UserRoleEnum
 ) {
@@ -22,7 +22,7 @@ class UserEntity(
     var email: String = email
 
     @Column(nullable = false)
-    val password: String = pwd
+    val password: String = password
 
     @Column(nullable = false)
     val username: String = username
@@ -49,7 +49,7 @@ class UserEntity(
             }
             return UserEntity(
                 email = request.email,
-                pwd = encoder.encode(request.password),
+                password = encoder.encode(request.password),
                 username = request.username,
                 role = userRole
             )

@@ -1,6 +1,0 @@
-/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/adapter/in/controller/ArticleContollerTest.kt
-/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/application/service/CommentServiceTest.kt
-/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/SsuBlogApplicationTests.kt
-/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/application/service/ArticleServiceTest.kt
-/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/adapter/in/controller/UserControllerTest.kt
-/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/application/service/UserServiceTest.kt

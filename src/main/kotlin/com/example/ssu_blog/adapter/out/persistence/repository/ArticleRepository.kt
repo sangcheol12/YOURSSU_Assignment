@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface ArticleRepository: JpaRepository<ArticleEntity, Long> {
+    fun findByArticleId(id: Long): ArticleEntity
     fun findAllByUserEntityId(userEntity: UserEntity): List<ArticleEntity>
     fun deleteAllByUserEntityId(userEntity: UserEntity)
 }
