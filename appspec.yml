@@ -1,0 +1,14 @@
+# appspec.yml
+
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/ssu_blog/ # 프로젝트 이름
+    overwrite: yes
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
