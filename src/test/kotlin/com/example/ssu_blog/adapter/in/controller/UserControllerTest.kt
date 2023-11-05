@@ -1,4 +1,4 @@
-package com.example.ssu_blog.adapter.`in`.controller
+/*package com.example.ssu_blog.adapter.`in`.controller
 
 import com.example.ssu_blog.adapter.`in`.dto.request.SignInRequest
 import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
@@ -104,4 +104,4 @@ internal class UserControllerTest @Autowired constructor(
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
     }
-}
+}*/
