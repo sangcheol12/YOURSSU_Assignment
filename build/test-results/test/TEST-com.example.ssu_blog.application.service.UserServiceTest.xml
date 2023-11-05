@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.ssu_blog.application.service.UserServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-11-05T12:51:44" hostname="bagsangcheol-ui-MacBookPro.local" time="0.226">
+  <properties/>
+  <testcase name="Given: 회원 가입을 시도하고, When: 유효한 사용자 정보를 제출하면, Then: 회원 가입이 성공해야 함" classname="com.example.ssu_blog.application.service.UserServiceTest" time="0.218"/>
+  <testcase name="Given: 이미 등록된 이메일로 가입을 시도하고, When: 동일 이메일로 가입을 시도하면, Then: IllegalStateException 예외가 발생해야 함" classname="com.example.ssu_blog.application.service.UserServiceTest" time="0.004"/>
+  <testcase name="Given: 탈퇴할 회원, When: 회원 탈퇴를 요청하면, Then: 사용자 및 관련 게시물이 삭제되어야 함" classname="com.example.ssu_blog.application.service.UserServiceTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

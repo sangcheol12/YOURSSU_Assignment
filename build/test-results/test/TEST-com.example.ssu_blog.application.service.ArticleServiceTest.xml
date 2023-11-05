@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.ssu_blog.application.service.ArticleServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-11-05T12:46:55" hostname="bagsangcheol-ui-MacBookPro.local" time="0.967">
+<testsuite name="com.example.ssu_blog.application.service.ArticleServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-11-05T12:51:43" hostname="bagsangcheol-ui-MacBookPro.local" time="0.578">
   <properties/>
-  <testcase name="Given: 게시글 ID, When: 게시글을 삭제하면, Then: 게시글과 관련된 댓글이 삭제되어야 함" classname="com.example.ssu_blog.application.service.ArticleServiceTest" time="0.933"/>
-  <testcase name="Given: 삭제 권한이 없는 게시글, When: 게시글을 삭제하면, Then: IllegalAccessException이 발생해야 함" classname="com.example.ssu_blog.application.service.ArticleServiceTest" time="0.015"/>
-  <testcase name="Given: 새 게시글, When: 게시글을 작성하면, Then: 작성한 게시글이 반환되어야 함" classname="com.example.ssu_blog.application.service.ArticleServiceTest" time="0.013"/>
+  <testcase name="Given: 게시글 ID, When: 게시글을 삭제하면, Then: 게시글과 관련된 댓글이 삭제되어야 함" classname="com.example.ssu_blog.application.service.ArticleServiceTest" time="0.568"/>
+  <testcase name="Given: 삭제 권한이 없는 게시글, When: 게시글을 삭제하면, Then: IllegalAccessException이 발생해야 함" classname="com.example.ssu_blog.application.service.ArticleServiceTest" time="0.005"/>
+  <testcase name="Given: 새 게시글, When: 게시글을 작성하면, Then: 작성한 게시글이 반환되어야 함" classname="com.example.ssu_blog.application.service.ArticleServiceTest" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

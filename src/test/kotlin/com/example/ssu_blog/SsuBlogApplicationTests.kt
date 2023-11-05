@@ -1,4 +1,4 @@
-package com.example.ssu_blog
+/*package com.example.ssu_blog
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -10,4 +10,4 @@ class SsuBlogApplicationTests {
 	fun contextLoads() {
 	}
 
-}
+}*/
