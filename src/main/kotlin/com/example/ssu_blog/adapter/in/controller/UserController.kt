@@ -32,6 +32,11 @@ class UserController (
     private val encoder: PasswordEncoder,
     private val jwtTokenProvider: JwtTokenProvider
 ) {
+    @ResponseBody
+    @GetMapping("/test")
+    @ResponseStatus(value = HttpStatus.OK)
+    fun testApi() = "Api test success";
+
     @Operation(summary = "회원 가입", description = "이메일과 패스워드로 회원 가입", tags = ["회원 Api"],
         responses = [
             ApiResponse(responseCode = "200", description = "회원 가입 성공", content = [Content(schema = Schema(implementation = SignUpResponse::class))]),
