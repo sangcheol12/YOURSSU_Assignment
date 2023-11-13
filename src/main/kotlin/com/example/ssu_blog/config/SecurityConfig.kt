@@ -19,7 +19,7 @@ class SecurityConfig(
     private val jwtTokenProvider: JwtTokenProvider,
     private val exceptionHandlerFilter: ExceptionHandlerFilter
 ) {
-    private val allowedUrls = arrayOf("/", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html","/swagger-ui/**", "/v3/**", "/api/user/signup", "/api/user/signin", "/api/user/refresh")
+    private val allowedUrls = arrayOf("/", "/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html","/swagger-ui/**", "/v3/**", "/api/user/signup", "/api/user/signin", "/api/user/refresh", "/api/user/test")
 
     @Bean
     fun passwordEncoder() = BCryptPasswordEncoder()

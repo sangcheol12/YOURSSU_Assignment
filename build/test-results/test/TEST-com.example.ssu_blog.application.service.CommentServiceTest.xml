@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.ssu_blog.application.service.CommentServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-11-05T12:51:44" hostname="bagsangcheol-ui-MacBookPro.local" time="0.013">
+<testsuite name="com.example.ssu_blog.application.service.CommentServiceTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-11-13T13:03:24" hostname="bagsangcheol-ui-MacBookPro.local" time="0.011">
   <properties/>
-  <testcase name="Given: 유저, 게시글, 댓글, When: 댓글 삭제하면, Then: 삭제된 댓글 반환되어야 함" classname="com.example.ssu_blog.application.service.CommentServiceTest" time="0.003"/>
-  <testcase name="Given: 유저, 게시글, 댓글, When: 삭제 권한 없는 댓글 삭제하면, Then: IllegalAccessException이 발생해야 함" classname="com.example.ssu_blog.application.service.CommentServiceTest" time="0.002"/>
-  <testcase name="Given: 유저, 게시글, When: 댓글을 추가하면, Then: 추가된 댓글이 반환되어야 함" classname="com.example.ssu_blog.application.service.CommentServiceTest" time="0.005"/>
+  <testcase name="Given: 유저, 게시글, 댓글, When: 댓글 삭제하면, Then: 삭제된 댓글 반환되어야 함" classname="com.example.ssu_blog.application.service.CommentServiceTest" time="0.005"/>
+  <testcase name="Given: 유저, 게시글, 댓글, When: 삭제 권한 없는 댓글 삭제하면, Then: IllegalAccessException이 발생해야 함" classname="com.example.ssu_blog.application.service.CommentServiceTest" time="0.003"/>
+  <testcase name="Given: 유저, 게시글, When: 댓글을 추가하면, Then: 추가된 댓글이 반환되어야 함" classname="com.example.ssu_blog.application.service.CommentServiceTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
