@@ -15,6 +15,17 @@ permissions:
     mode: 0755
 
 hook:
+  BeforeInstall:
+    - location: /bin/bash
+      timeout: 180
+      runas: ubuntu
+      args:
+        - -c
+        - |
+          chmod +x /home/ubuntu/ssu_blog/scripts/run_new_was.sh
+          chmod +x /home/ubuntu/ssu_blog/scripts/health_check.sh
+          chmod +x /home/ubuntu/ssu_blog/scripts/switch.sh
+
   ApplicationStart:
     - location: scripts/run_new_was.sh
       timeout: 180
