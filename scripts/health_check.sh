@@ -1,5 +1,3 @@
-# health_check.sh
-
 #!/bin/bash
 
 # Crawl current connected port of WAS
