@@ -15,6 +15,10 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
 }
 
+tasks.getByName<Jar>("jar") {
+    enabled = false
+}
+
 repositories {
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
