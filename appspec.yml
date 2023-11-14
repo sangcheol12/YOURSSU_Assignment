@@ -19,9 +19,10 @@ hook:
     - location: scripts/run_new_was.sh
       timeout: 200
       runas: ubuntu
-    #- location: scripts/health_check.sh
-      #timeout: 180
-      #runas: ubuntu
     - location: scripts/switch.sh
+      timeout: 180
+      runas: ubuntu
+  ValidateService:
+    - location: scripts/health_check.sh
       timeout: 180
       runas: ubuntu
