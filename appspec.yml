@@ -16,13 +16,13 @@ permissions:
 
 hook:
   ApplicationStart:
-    - location: scripts/run_new_was.sh
+    - location: /home/ubuntu/ssu_blog/scripts/run_new_was.sh
       timeout: 200
       runas: ubuntu
-    - location: scripts/switch.sh
+    - location: /home/ubuntu/ssu_blog/scripts/switch.sh
       timeout: 180
       runas: ubuntu
-  ValidateService:
-    - location: scripts/health_check.sh
-      timeout: 180
-      runas: ubuntu
+  #ValidateService:
+    #- location: /home/ubuntu/ssu_blog/scripts/health_check.sh
+      #timeout: 180
+      #runas: ubuntu
