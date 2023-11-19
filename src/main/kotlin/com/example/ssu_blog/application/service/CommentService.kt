@@ -27,7 +27,7 @@ class CommentService (
 
     fun getComment(commentId: Long): CommentEntity {
         return commentRepository.findById(commentId)
-            .orElseThrow { NoSuchElementException("댓글이 존재하지 않습니다.") }
+            ?: throw NoSuchElementException("댓글이 존재하지 않습니다.")
     }
 
     fun getAuthComment(commentId: Long, accessUser: UserEntity, curArticleEntity: ArticleEntity): CommentEntity {

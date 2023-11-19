@@ -25,7 +25,7 @@ class ArticleService (
 
     fun getArticle(articleId: Long): ArticleEntity {
         return articleRepository.findById(articleId)
-            .orElseThrow { NoSuchElementException("게시글이 존재하지 않습니다.") }
+            ?: throw NoSuchElementException("게시글이 존재하지 않습니다.")
     }
 
     fun getAuthArticle(articleId: Long, accessUser: UserEntity): ArticleEntity {
