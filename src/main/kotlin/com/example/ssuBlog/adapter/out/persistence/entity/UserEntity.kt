@@ -5,7 +5,14 @@ import com.example.ssuBlog.utils.UserRoleEnum
 import com.querydsl.core.annotations.QueryEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.Table
 
 @Entity
 @QueryEntity

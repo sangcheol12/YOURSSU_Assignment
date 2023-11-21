@@ -1,10 +1,10 @@
-package com.example.ssu_blog.application.service
+package com.example.ssuBlog.application.service
 
-import com.example.ssu_blog.adapter.out.persistence.entity.ArticleEntity
-import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
-import com.example.ssu_blog.adapter.out.persistence.repository.ArticleRepository
-import com.example.ssu_blog.adapter.out.persistence.repository.CommentRepository
-import com.example.ssu_blog.utils.UserRoleEnum
+import com.example.ssuBlog.adapter.out.persistence.entity.ArticleEntity
+import com.example.ssuBlog.adapter.out.persistence.entity.UserEntity
+import com.example.ssuBlog.adapter.out.persistence.repository.ArticleRepository
+import com.example.ssuBlog.adapter.out.persistence.repository.CommentRepository
+import com.example.ssuBlog.utils.UserRoleEnum
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -59,7 +59,7 @@ class ArticleServiceTest {
         val articleId = 1L
         val accessUser = UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER)
         val articleToDelete = ArticleEntity("Test Content", "Test Title", accessUser)
-        Mockito.`when`(articleRepository.findById(articleId)).thenReturn(Optional.of(articleToDelete))
+        Mockito.`when`(articleRepository.findById(articleId)).thenReturn(articleToDelete)
 
         // when
         articleService.delete(articleId, accessUser)
@@ -80,7 +80,7 @@ class ArticleServiceTest {
             "Test Title",
             UserEntity("another@urssu.com", "password", "other User", UserRoleEnum.USER)
         )
-        Mockito.`when`(articleRepository.findById(articleId)).thenReturn(Optional.of(articleToDelete))
+        Mockito.`when`(articleRepository.findById(articleId)).thenReturn(articleToDelete)
 
         // When
         val exception = assertThrows<IllegalAccessException> { articleService.delete(articleId, accessUser) }

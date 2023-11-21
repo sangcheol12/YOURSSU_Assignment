@@ -35,7 +35,11 @@ class CustomHandlerMethodArgumentResolver(
 
             // UserDetails에서 사용자 정보 추출
             val userEmail = currentPrincipal.username
-            val role: String? = (jwtTokenProvider.getRole(token) as? MutableCollection<out GrantedAuthority>)?.firstOrNull()?.authority
+            val role: String? = (
+                jwtTokenProvider
+                    .getRole(token) as? MutableCollection<out GrantedAuthority>
+                )
+                ?.firstOrNull()?.authority
 
             // AuthInfo에 이메일 설정
             val curUser = AuthInfo(userEmail, role!!)

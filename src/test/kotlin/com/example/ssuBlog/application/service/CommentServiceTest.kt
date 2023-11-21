@@ -1,10 +1,10 @@
-package com.example.ssu_blog.application.service
+package com.example.ssuBlog.application.service
 
-import com.example.ssu_blog.adapter.out.persistence.entity.ArticleEntity
-import com.example.ssu_blog.adapter.out.persistence.entity.CommentEntity
-import com.example.ssu_blog.adapter.out.persistence.entity.UserEntity
-import com.example.ssu_blog.adapter.out.persistence.repository.CommentRepository
-import com.example.ssu_blog.utils.UserRoleEnum
+import com.example.ssuBlog.adapter.out.persistence.entity.ArticleEntity
+import com.example.ssuBlog.adapter.out.persistence.entity.CommentEntity
+import com.example.ssuBlog.adapter.out.persistence.entity.UserEntity
+import com.example.ssuBlog.adapter.out.persistence.repository.CommentRepository
+import com.example.ssuBlog.utils.UserRoleEnum
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
@@ -63,7 +63,7 @@ class CommentServiceTest {
         val comment = CommentEntity("Test Comment", article, user)
 
         // When
-        Mockito.`when`(commentRepository.findById(commentIdToDelete)).thenReturn(Optional.of(comment))
+        Mockito.`when`(commentRepository.findById(commentIdToDelete)).thenReturn(comment)
         commentService.delete(commentIdToDelete, user, article)
 
         // Then
@@ -81,7 +81,7 @@ class CommentServiceTest {
         val comment = CommentEntity("Test Comment", article, anotherUser)
 
         // When
-        Mockito.`when`(commentRepository.findById(commentIdToDelete)).thenReturn(Optional.of(comment))
+        Mockito.`when`(commentRepository.findById(commentIdToDelete)).thenReturn(comment)
         val exception = assertThrows<IllegalAccessException> { commentService.delete(commentIdToDelete, user, article) }
 
         // Then

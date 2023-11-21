@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 class ExceptionHandlerFilter : OncePerRequestFilter() {
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
         try {
             filterChain.doFilter(request, response)
         } catch (ex: com.example.ssuBlog.Exception.CustomBadRequestException) {
@@ -22,7 +26,11 @@ class ExceptionHandlerFilter : OncePerRequestFilter() {
         }
     }
 
-    fun setExceptionResponse(status: HttpStatus, response: HttpServletResponse, ex: com.example.ssuBlog.Exception.CustomBadRequestException) {
+    fun setExceptionResponse(
+        status: HttpStatus,
+        response: HttpServletResponse,
+        ex: com.example.ssuBlog.Exception.CustomBadRequestException
+    ) {
         val requestAttributes = RequestContextHolder.getRequestAttributes() as ServletRequestAttributes
         val requestURI = requestAttributes.request.requestURI
 

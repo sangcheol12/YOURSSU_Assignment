@@ -14,7 +14,11 @@ import javax.servlet.http.HttpServletResponse
 class JwtAuthFilter(
     private val jwtTokenProvider: JwtTokenProvider
 ) : OncePerRequestFilter() {
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, filterChain: FilterChain) {
+    override fun doFilterInternal(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        filterChain: FilterChain
+    ) {
         val accessToken = jwtTokenProvider.getAccessToken(request)
         if (accessToken != null) {
             if (jwtTokenProvider.validateAccessToken(accessToken)) {

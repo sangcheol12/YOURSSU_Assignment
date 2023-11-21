@@ -57,7 +57,8 @@ class UserService(
         }
         val userEmail = jwtTokenProvider.getUserEmailByRefresh(refreshToken)
         val curUser = findOneByEmail(userEmail)
-        if (curUser.refreshToken != refreshToken) throw IllegalAccessException("리프레쉬 토큰이 일치하지 않습니다.") // 데이터베이스에 저장 된 리프레쉬 토큰과 일치 여부 검사
+        // 데이터베이스에 저장 된 리프레쉬 토큰과 일치 여부 검사
+        if (curUser.refreshToken != refreshToken) throw IllegalAccessException("리프레쉬 토큰이 일치하지 않습니다.")
         val userRole = jwtTokenProvider.getRoleByRefresh(refreshToken)
         val result = TokenRefreshResponse(
             jwtTokenProvider.createAccessToken(userEmail, userRole),
