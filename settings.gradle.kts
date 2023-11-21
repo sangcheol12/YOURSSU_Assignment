@@ -5,4 +5,4 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "ssu_blog"
+rootProject.name = "ssuBlog"

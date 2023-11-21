@@ -43,9 +43,9 @@ class UserServiceTest {
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        userService = UserService(userRepository ,articleRepository, commentRepository, jwtTokenProvider, encoder)
+        userService = UserService(userRepository, articleRepository, commentRepository, jwtTokenProvider, encoder)
 
-        val user = UserEntity("leave@urssu.com", "password", "Tester",  UserRoleEnum.USER)
+        val user = UserEntity("leave@urssu.com", "password", "Tester", UserRoleEnum.USER)
         userRepository.save(user)
 
         val article1 = ArticleEntity("Title 1", "Content 1", user)

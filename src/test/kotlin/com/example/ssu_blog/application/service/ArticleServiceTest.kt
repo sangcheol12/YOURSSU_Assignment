@@ -28,18 +28,21 @@ class ArticleServiceTest {
 
     private lateinit var articleService: ArticleService
 
-
     @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
-        articleService = ArticleService(articleRepository,commentRepository)
+        articleService = ArticleService(articleRepository, commentRepository)
     }
 
     @Test
     @DisplayName("Given: 새 게시글, When: 게시글을 작성하면, Then: 작성한 게시글이 반환되어야 함")
     fun postArticleTest() {
         // given
-        val newArticle = ArticleEntity("Test Content", "Test Title", UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER))
+        val newArticle = ArticleEntity(
+            "Test Content",
+            "Test Title",
+            UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER)
+        )
         Mockito.`when`(articleRepository.save(newArticle)).thenReturn(newArticle)
 
         // then
@@ -72,7 +75,11 @@ class ArticleServiceTest {
         // Given
         val articleId = 1L
         val accessUser = UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER)
-        val articleToDelete = ArticleEntity("Test Content", "Test Title", UserEntity("another@urssu.com", "password", "other User", UserRoleEnum.USER))
+        val articleToDelete = ArticleEntity(
+            "Test Content",
+            "Test Title",
+            UserEntity("another@urssu.com", "password", "other User", UserRoleEnum.USER)
+        )
         Mockito.`when`(articleRepository.findById(articleId)).thenReturn(Optional.of(articleToDelete))
 
         // When

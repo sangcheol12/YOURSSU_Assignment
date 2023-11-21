@@ -1,0 +1,3 @@
+[90m/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/application/service/[0mArticleServiceTest.kt[90m:[0m1[90m:1:[0m Package name must not contain underscore [90m(package-name)[0m
+[90m/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/application/service/[0mCommentServiceTest.kt[90m:[0m1[90m:1:[0m Package name must not contain underscore [90m(package-name)[0m
+[90m/Users/parksangcheol/Desktop/ssu_blog/src/test/kotlin/com/example/ssu_blog/application/service/[0mUserServiceTest.kt[90m:[0m1[90m:1:[0m Package name must not contain underscore [90m(package-name)[0m

@@ -16,13 +16,12 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.jupiter.MockitoExtension
-import org.springframework.boot.test.context.SpringBootTest
 import java.util.*
-import javax.transaction.Transactional
 
 @ExtendWith(MockitoExtension::class)
 class CommentServiceTest {
     private lateinit var commentService: CommentService
+
     @Mock
     private lateinit var commentRepository: CommentRepository
 
@@ -36,7 +35,11 @@ class CommentServiceTest {
     @DisplayName("Given: 유저, 게시글, When: 댓글을 추가하면, Then: 추가된 댓글이 반환되어야 함")
     fun postCommentTest() {
         // Given
-        val articleToDelete = ArticleEntity("Test Content", "Test Title", UserEntity("another@urssu.com", "password", "other User", UserRoleEnum.USER))
+        val articleToDelete = ArticleEntity(
+            "Test Content",
+            "Test Title",
+            UserEntity("another@urssu.com", "password", "other User", UserRoleEnum.USER)
+        )
         val user = UserEntity("test@urssu.com", "password", "Test User", UserRoleEnum.USER)
         val article = ArticleEntity("Test Content", "Test Title", user)
         val comment = CommentEntity("Test Comment", article, user)
