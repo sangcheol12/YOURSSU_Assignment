@@ -1,9 +1,11 @@
 package com.example.ssu_blog.adapter.out.persistence.entity
 
+import com.querydsl.core.annotations.QueryEntity
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@QueryEntity
 @Table(name = "comment")
 class CommentEntity (
     content: String,

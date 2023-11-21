@@ -2,11 +2,13 @@ package com.example.ssu_blog.adapter.out.persistence.entity
 
 import com.example.ssu_blog.adapter.`in`.dto.request.SignUpRequest
 import com.example.ssu_blog.utils.UserRoleEnum
+import com.querydsl.core.annotations.QueryEntity
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@QueryEntity
 @Table(name = "user")
 class UserEntity(
     email: String,

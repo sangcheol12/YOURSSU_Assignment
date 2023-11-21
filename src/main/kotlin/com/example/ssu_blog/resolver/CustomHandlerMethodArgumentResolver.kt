@@ -1,9 +1,11 @@
 package com.example.ssu_blog.resolver
 
 import com.example.ssu_blog.auth.AuthInfo
+import com.example.ssu_blog.auth.JwtTokenProvider
 import org.apache.catalina.User
 import org.springframework.core.MethodParameter
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
@@ -13,7 +15,9 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 
 @Component
-class CustomHandlerMethodArgumentResolver: HandlerMethodArgumentResolver{
+class CustomHandlerMethodArgumentResolver (
+    private val jwtTokenProvider: JwtTokenProvider
+): HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.parameterType == AuthInfo::class.java
     }
@@ -28,11 +32,16 @@ class CustomHandlerMethodArgumentResolver: HandlerMethodArgumentResolver{
         val currentPrincipal = authentication.principal
 
         if (currentPrincipal is UserDetails) {
+            // access token 추출
+            val token = authentication.credentials as String
+
             // UserDetails에서 사용자 정보 추출
             val userEmail = currentPrincipal.username
+            val role: String? = (jwtTokenProvider.getRole(token) as? MutableCollection<out GrantedAuthority>)?.firstOrNull()?.authority
+
 
             // AuthInfo에 이메일 설정
-            val curUser = AuthInfo(userEmail)
+            val curUser = AuthInfo(userEmail, role!!)
             return curUser
         }
         return null

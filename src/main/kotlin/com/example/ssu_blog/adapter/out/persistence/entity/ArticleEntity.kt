@@ -1,5 +1,6 @@
 package com.example.ssu_blog.adapter.out.persistence.entity
 
+import com.querydsl.core.annotations.QueryEntity
 import java.time.LocalDateTime
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -11,6 +12,7 @@ import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Entity
+@QueryEntity
 @Table(name = "article")
 class ArticleEntity (
     content: String,
